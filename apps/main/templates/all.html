@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All tasks</title>
+    <style>
+        .t {
+            border: 1px solid black;
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h1>All tasks</h1><br>
+    <div><a href="../create/">Create task</a></div><br>
+    <form method="get">
+        <label for="status">Filter by status:</label>
+        <select name="status" id="status">
+            <option value="">All</option>
+            <option value="completed" {% if request.GET.status == "completed" %}selected{% endif %}>Completed</option>
+            <option value="not_completed" {% if request.GET.status == "not_completed" %}selected{% endif %}>Not Completed</option>
+        </select>
+        
+        <label for="sort_by">Sort by:</label>
+        <select name="sort_by" id="sort_by">
+            <option value="">Default</option>
+            <option value="created_datetime" {% if request.GET.sort_by == "created_datetime" %}selected{% endif %}>Date Created</option>
+            <option value="title" {% if request.GET.sort_by == "title" %}selected{% endif %}>Title</option>
+        </select>
+        
+        <button type="submit">Apply</button>
+    </form>
+    {% for i in tasks %}
+    <div class="t">
+        {% if i.is_completed %}
+        <div style="color: green;"><b>{{ i.title }}</b></div>
+        {% else %}
+        <div style="color: black;"><b>{{ i.title }}</b></div>
+        {% endif %}
+        
+        <div>{{ i.text }}</div>
+        <div>{{ i.created_datetime }}</div>
+        <a href="../get/{{ i.pk }}/">more...</a> 
+    </div> <br>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task{{task.pk}}</title>
+    {% if task.is_completed %}
+    <style>
+        .tits {
+            color: green;
+        }
+    </style>
+    {% endif %}
+    <style>
+        .t {
+            border: 1px solid black;
+            width: 400px;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Task №{{ task.pk }}</h1><br>
+    <div class="t">
+        <div class="tits"><b>{{ task.title }}</b></div>
+        <div>{{ task.text }}</div>
+        <div>Created - {{ task.created_datetime }}</div>
+        <div>Is updated - {{ task.is_updated }}</div>
+        <div>Is completed - {{ task.is_completed }}</div> 
+        <a href="/tasks/delete/{{ task.pk }}/">delete</a> 
+        {% if task.is_completed == False %}
+        <a href="/tasks/update/{{ task.pk }}/">update</a>
+        <form action="" method="post"> {% csrf_token %}
+            <input type="submit" name="done" value="DONE"> 
+        </form>
+        {% endif %}
+    </div> <br>
+</body>
+</html>
